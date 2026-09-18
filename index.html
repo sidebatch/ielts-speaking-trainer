@@ -186,6 +186,32 @@ if('speechSynthesis' in window){
  const prev=speechSynthesis.onvoiceschanged;
  speechSynthesis.onvoiceschanged=()=>{if(typeof prev==='function')prev();if(view==='settings')settings()}
 }
+
+// Safe Android/browser Back guard.
+// Back from any app screen returns to Home; Back on Home stays in the app.
+function returnHomeFromSystemBack(){
+ if('speechSynthesis' in window)speechSynthesis.cancel();
+ session=null;
+ path=null;
+ trainer=null;
+ topicId=null;
+ qko=false;
+ ako=false;
+ level=state.target;
+ view='home';
+ home();
+}
+history.replaceState({ieltsBase:true},'',location.href);
+history.pushState({ieltsGuard:true},'',location.href);
+window.addEventListener('popstate',()=>{
+ if(view!=='home'){
+   returnHomeFromSystemBack();
+ }else{
+   toast('홈에서는 뒤로가기로 종료되지 않아요.');
+ }
+ history.pushState({ieltsGuard:true},'',location.href);
+});
+
 render();
 </script>
 </body>
