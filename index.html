@@ -4,14 +4,14 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#f6f6f2">
-  <meta name="app-version" content="v0.4.1">
+  <meta name="app-version" content="v0.4.2">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
   <title>IELTS Speaking Trainer</title>
   <style>:root{--bg:#f5f4fb;--card:#fff;--line:#e7e3ef;--text:#24222a;--muted:#77727f;--green:#7658ee;--green2:#eee9ff;--warn:#a87506;--warn2:#fff7db;--shadow:0 14px 40px rgba(67,49,113,.09)}
 *{box-sizing:border-box}html{-webkit-text-size-adjust:100%}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI","Noto Sans KR",sans-serif}button,textarea{font:inherit}button{cursor:pointer}
-#app{min-height:100dvh;padding-bottom:86px}.top{position:sticky;top:0;z-index:10;background:rgba(245,244,251,.94);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);padding:14px 16px}.topin{max-width:760px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:12px}.brand b{display:block;font-size:16px}.brand span{font-size:12px;color:var(--muted)}.gear{border:1px solid var(--line);background:#fff;border-radius:12px;padding:9px 11px}
+#app{min-height:100dvh;padding-bottom:86px}.top{position:sticky;top:0;z-index:10;background:rgba(245,244,251,.94);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);padding:14px 16px}.topin{max-width:760px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:12px}.brand b{display:block;font-size:16px}.brand span{font-size:12px;color:var(--muted)}.versionBadge{display:inline-flex;align-items:center;justify-content:center;background:var(--green);color:#fff;border-radius:999px;padding:7px 11px;font-size:12px;font-weight:950;letter-spacing:.02em;box-shadow:0 6px 16px rgba(118,88,238,.22);white-space:nowrap}.gear{border:1px solid var(--line);background:#fff;border-radius:12px;padding:9px 11px}
 main{max-width:720px;margin:auto;padding:18px 14px 30px}.hero,.card{background:var(--card);border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow)}.hero{padding:21px}.hero h1{margin:4px 0 8px;font-size:31px;line-height:1.15}.hero p{margin:0;color:var(--muted);line-height:1.55}.eyebrow{font-size:11px;font-weight:800;color:var(--green);letter-spacing:.08em}
 .levels{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:16px}.level{border:1px solid var(--line);background:#f0f1ed;border-radius:13px;padding:11px;font-weight:800}.level.on{background:var(--green);color:#fff;border-color:var(--green)}
 .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:14px}.quick{background:#fff;border:1px solid var(--line);border-radius:20px;padding:16px;text-align:left;min-height:120px}.quick i{font-style:normal;font-size:22px}.quick b{display:block;margin:14px 0 4px}.quick span{font-size:12px;color:var(--muted);line-height:1.45}
@@ -98,8 +98,9 @@ function speak(s,rate=.92){
  if(v){u.voice=v;u.lang=v.lang||u.lang}
  speechSynthesis.speak(u)
 }
+const APP_VERSION='v0.4.2';
 function nav(active){return '<nav class="bottom">'+[['home','🏠','홈'],['topics','📚','토픽'],['review','🔁','복습'],['history','📅','기록'],['settings','⚙️','설정']].map(x=>'<button class="nav '+(active===x[0]?'on':'')+'" data-nav="'+x[0]+'"><strong>'+x[1]+'</strong>'+x[2]+'</button>').join('')+'</nav>'}
-function shell(body,active='home'){app.innerHTML='<header class="top"><div class="topin"><div class="brand"><b>IELTS Speaking Trainer</b><span>2026 Sep–Dec · Part 1</span></div></div></header><main>'+body+'</main>'+nav(active)}
+function shell(body,active='home'){app.innerHTML='<header class="top"><div class="topin"><div class="brand"><b>IELTS Speaking Trainer</b><span>2026 Sep–Dec · Part 1</span></div><span class="versionBadge">'+APP_VERSION+'</span></div></header><main>'+body+'</main>'+nav(active)}
 function home(){
  const today=state.history[day()]||{studied:0,success:0,retry:0};
  shell('<section class="hero"><div class="eyebrow">PART 1 SPEAKING</div><h1>좋은 답변을 반복해서<br>말의 뼈대를 만들어요.</h1><p>질문을 듣고, 나와 가까운 답변 방향을 고른 뒤 읽기·듣기·타이핑으로 익혀보세요.</p><div class="levels">'+levels.map(l=>'<button class="level '+(state.target===l?'on':'')+'" data-target="'+l+'">Target '+l+'</button>').join('')+'</div><div class="stats"><div class="stat"><b>'+today.studied+'</b><span>오늘 학습</span></div><div class="stat"><b>'+today.success+'</b><span>성공</span></div><div class="stat"><b>'+Object.keys(state.review).length+'</b><span>복습 저장</span></div></div></section><div class="grid"><button class="quick" data-today><i>▶️</i><b>오늘 학습</b><span>시즌 문제 중 최대 5문항</span></button><button class="quick" data-nav="topics"><i>📚</i><b>토픽별 학습</b><span>'+DATA.topics.length+'개 토픽 · '+flat.length+'문항</span></button><button class="quick" data-nav="review"><i>🔁</i><b>맞춤 복습</b><span>다시 연습한 답변부터</span></button><button class="quick" data-nav="history"><i>📅</i><b>학습 기록</b><span>최근 학습량 확인</span></button></div>','home')
