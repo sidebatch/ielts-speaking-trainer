@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#f6f6f2">
-  <meta name="app-version" content="v0.2.0">
+  <meta name="app-version" content="v0.2.1">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
@@ -115,7 +115,7 @@ function review(){
  const arr=Object.entries(state.review);
  shell('<div class="secHead"><h2>맞춤 복습</h2><span>'+arr.length+' saved</span></div>'+(arr.length?'<div class="list">'+arr.map(([k,v])=>{const [qid,pid]=k.split('::'),q=qmap.get(qid),p=q?.paths.find(x=>x.id===pid);return q&&p?'<button class="row" data-review="'+k+'"><span><b>'+esc(q.question.en)+'</b><small>'+esc(p.label.ko)+' · '+(v.status==='retry'?'다시 연습':'성공')+'</small></span><span>›</span></button>':''}).join('')+'</div>':'<div class="empty">아직 복습할 답변이 없어요.<br>학습 후 <b>다시 연습</b>을 눌러보세요.</div>'),'review')
 }
-function history(){
+function historyView(){
  const days=Object.keys(state.history).sort().reverse().slice(0,14);
  shell('<div class="secHead"><h2>학습 기록</h2><span>최근 14일</span></div>'+(days.length?'<div class="list">'+days.map(d=>{const h=state.history[d];return '<div class="row"><span><b>'+d+'</b><small>학습 '+h.studied+' · 성공 '+h.success+' · 다시 '+h.retry+'</small></span></div>'}).join('')+'</div>':'<div class="empty">아직 학습 기록이 없어요.</div>'),'history')
 }
@@ -181,7 +181,7 @@ function trainerView(){
 }
 function mark(kind){const q=cur(),k=q.id+'::'+path.id;state.review[k]={status:kind,updated:day()};const d=day();state.history[d]??={studied:0,success:0,retry:0};state.history[d].studied++;state.history[d][kind]++;save();toast(kind==='success'?'성공으로 저장했어요.':'다시 연습에 넣었어요.');setTimeout(nextQ,250)}
 function nextQ(){if(session.index<session.ids.length-1){session.index++;session.reviewKey=null;path=null;level=state.target;qko=false;ako=false;study()}else{const o=session.origin;session=null;view=o==='review'?'review':'home';o==='review'?review():home()}}
-function render(){if(view==='home')home();else if(view==='topics')topics();else if(view==='topic')topic();else if(view==='review')review();else if(view==='history')history();else if(view==='settings')settings();else if(view==='study')study();else if(view==='trainer')trainerView()}
+function render(){if(view==='home')home();else if(view==='topics')topics();else if(view==='topic')topic();else if(view==='review')review();else if(view==='history')historyView();else if(view==='settings')settings();else if(view==='study')study();else if(view==='trainer')trainerView()}
 document.addEventListener('click',e=>{
  const n=e.target.closest('[data-nav]');if(n){view=n.dataset.nav;session=null;path=null;render();return}
  if(e.target.closest('[data-settings]')){view='settings';settings();return}
@@ -219,31 +219,6 @@ if('speechSynthesis' in window){
  const prev=speechSynthesis.onvoiceschanged;
  speechSynthesis.onvoiceschanged=()=>{if(typeof prev==='function')prev();if(view==='settings')settings()}
 }
-
-// Safe Android/browser Back guard.
-// Back from any app screen returns to Home; Back on Home stays in the app.
-function returnHomeFromSystemBack(){
- if('speechSynthesis' in window)speechSynthesis.cancel();
- session=null;
- path=null;
- trainer=null;
- topicId=null;
- qko=false;
- ako=false;
- level=state.target;
- view='home';
- home();
-}
-history.replaceState({ieltsBase:true},'',location.href);
-history.pushState({ieltsGuard:true},'',location.href);
-window.addEventListener('popstate',()=>{
- if(view!=='home'){
-   returnHomeFromSystemBack();
- }else{
-   toast('홈에서는 뒤로가기로 종료되지 않아요.');
- }
- history.pushState({ieltsGuard:true},'',location.href);
-});
 
 render();
 </script>
