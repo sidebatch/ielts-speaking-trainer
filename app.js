@@ -88,16 +88,51 @@ function trainerView(){
 function mark(kind){const q=cur(),k=q.id+'::'+path.id;state.review[k]={status:kind,updated:day()};const d=day();state.history[d]??={studied:0,success:0,retry:0};state.history[d].studied++;state.history[d][kind]++;save();toast(kind==='success'?'성공으로 저장했어요.':'다시 연습에 넣었어요.');setTimeout(nextQ,250)}
 function nextQ(){if(session.index<session.ids.length-1){session.index++;session.reviewKey=null;path=null;level=state.target;qko=false;ako=false;study()}else{const o=session.origin;session=null;view=o==='review'?'review':'home';o==='review'?review():home()}}
 function render(){if(view==='home')home();else if(view==='topics')topics();else if(view==='topic')topic();else if(view==='review')review();else if(view==='history')history();else if(view==='settings')settings();else if(view==='study')study();else if(view==='trainer')trainerView()}
+let handlingPop=false;
+function pushAppHistory(){
+ if(handlingPop)return;
+ history.pushState({ieltsApp:true,view},'',location.href)
+}
+function goHomeFromBack(){
+ speechSynthesis?.cancel?.();
+ session=null;path=null;trainer=null;topicId=null;qko=false;ako=false;view='home';home()
+}
+function handleBrowserBack(){
+ if(view==='trainer'){view='study';trainer=null;study();return}
+ if(view==='study'){
+   const origin=session?.origin;
+   session=null;path=null;trainer=null;qko=false;ako=false;
+   if(origin==='review'){view='review';review()}
+   else if(topicId){view='topic';topic()}
+   else{view='home';home()}
+   return
+ }
+ if(view==='topic'){view='topics';topicId=null;topics();return}
+ if(view!=='home'){goHomeFromBack();return}
+ const leave=window.confirm('IELTS Speaking Trainer를 종료할까요?');
+ if(leave){
+   history.back();
+ }else{
+   history.pushState({ieltsApp:true,view:'home'},'',location.href);
+ }
+}
 document.addEventListener('click',e=>{
- const n=e.target.closest('[data-nav]');if(n){view=n.dataset.nav;session=null;path=null;render();return}
- if(e.target.closest('[data-settings]')){view='settings';settings();return}
+ const n=e.target.closest('[data-nav]');if(n){view=n.dataset.nav;session=null;path=null;history.replaceState({ieltsApp:true,view:'home'},'',location.href);
+history.pushState({ieltsApp:true,view:'home'},'',location.href);
+window.addEventListener('popstate',()=>{
+ handlingPop=true;
+ handleBrowserBack();
+ handlingPop=false;
+});
+render();pushAppHistory();return}
+ if(e.target.closest('[data-settings]')){view='settings';settings();pushAppHistory();return}
  const targ=e.target.closest('[data-target]');if(targ){state.target=targ.dataset.target;level=state.target;save();render();return}
  const ac=e.target.closest('[data-accent]');if(ac){state.accent=ac.dataset.accent;state.voiceURI='';save();settings();return}
  if(e.target.closest('[data-preview-voice]')){speak("I usually use English when I study or travel.");return}
- const t=e.target.closest('[data-topic]');if(t){topicId=t.dataset.topic;view='topic';topic();return}
- const q=e.target.closest('[data-q]');if(q){start([q.dataset.q],'topics');return}
- const rv=e.target.closest('[data-review]');if(rv){start([rv.dataset.review.split('::')[0]],'review',rv.dataset.review);return}
- if(e.target.closest('[data-today]')){const ids=[...flat].sort(()=>Math.random()-.5).slice(0,5).map(q=>q.id);start(ids,'today');return}
+ const t=e.target.closest('[data-topic]');if(t){topicId=t.dataset.topic;view='topic';topic();pushAppHistory();return}
+ const q=e.target.closest('[data-q]');if(q){start([q.dataset.q],'topics');pushAppHistory();return}
+ const rv=e.target.closest('[data-review]');if(rv){start([rv.dataset.review.split('::')[0]],'review',rv.dataset.review);pushAppHistory();return}
+ if(e.target.closest('[data-today]')){const ids=[...flat].sort(()=>Math.random()-.5).slice(0,5).map(q=>q.id);start(ids,'today');pushAppHistory();return}
  const p=e.target.closest('[data-path]');if(p){path=cur().paths.find(x=>x.id===p.dataset.path);level=state.target;study();return}
  const l=e.target.closest('[data-level]');if(l){level=l.dataset.level;ako=false;study();return}
  if(e.target.closest('[data-qko]')){qko=!qko;study();return}
@@ -107,7 +142,7 @@ document.addEventListener('click',e=>{
  if(e.target.closest('[data-slow-a]')){speak(path.answers[level].en,.72);return}
  if(e.target.closest('[data-change]')){path=null;ako=false;study();return}
  const r=e.target.closest('[data-rate]');if(r){mark(r.dataset.rate);return}
- if(e.target.closest('[data-trainer]')){const a=path.answers[level].en;trainer={sentences:(a.match(/[^.!?]+[.!?]+|[^.!?]+$/g)||[a]).map(x=>x.trim()),i:0,phase:'learn',input:'',feedback:null};view='trainer';trainerView();return}
+ if(e.target.closest('[data-trainer]')){const a=path.answers[level].en;trainer={sentences:(a.match(/[^.!?]+[.!?]+|[^.!?]+$/g)||[a]).map(x=>x.trim()),i:0,phase:'learn',input:'',feedback:null};view='trainer';trainerView();pushAppHistory();return}
  if(e.target.closest('[data-close-trainer]')){view='study';study();return}
  if(e.target.closest('[data-speak-s]')){speak(trainer.sentences[trainer.i]);return}
  if(e.target.closest('[data-slow-s]')){speak(trainer.sentences[trainer.i],.72);return}
