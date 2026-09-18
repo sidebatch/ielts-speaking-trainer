@@ -1,17 +1,40 @@
 const SKEY='ielts-speaking-trainer-v2';
 const levels=['5.0','6.0','7.0'];
+const accents=[
+ {id:'en-US',flag:'🇺🇸',name:'미국',short:'US'},
+ {id:'en-GB',flag:'🇬🇧',name:'영국',short:'UK'},
+ {id:'en-CA',flag:'🇨🇦',name:'캐나다',short:'CA'},
+ {id:'en-AU',flag:'🇦🇺',name:'호주',short:'AU'}
+];
 let state=load(), view='home', topicId=null, session=null, path=null, level=state.target, qko=false, ako=false, trainer=null;
 const flat=DATA.topics.flatMap(t=>t.questions.map(q=>({...q,topic:t})));
 const qmap=new Map(flat.map(q=>[q.id,q]));
 const app=document.getElementById('app');
-function load(){try{return Object.assign({target:'6.0',review:{},history:{}},JSON.parse(localStorage.getItem(SKEY)||'{}'))}catch{return{target:'6.0',review:{},history:{}}}}
+function defaults(){return{target:'6.0',review:{},history:{},accent:'en-US',voiceURI:''}}
+function load(){try{return Object.assign(defaults(),JSON.parse(localStorage.getItem(SKEY)||'{}'))}catch{return defaults()}}
 function save(){localStorage.setItem(SKEY,JSON.stringify(state))}
 function esc(s=''){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
 function day(){return new Date().toISOString().slice(0,10)}
 function toast(s){const e=document.createElement('div');e.className='toast';e.textContent=s;document.body.appendChild(e);setTimeout(()=>e.remove(),1400)}
-function speak(s,rate=.92){speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(s);u.lang='en-US';u.rate=rate;speechSynthesis.speak(u)}
-function nav(active){return '<nav class="bottom">'+[['home','🏠','홈'],['topics','📚','토픽'],['review','🔁','복습'],['history','📅','기록']].map(x=>'<button class="nav '+(active===x[0]?'on':'')+'" data-nav="'+x[0]+'"><strong>'+x[1]+'</strong>'+x[2]+'</button>').join('')+'</nav>'}
-function shell(body,active='home'){app.innerHTML='<header class="top"><div class="topin"><div class="brand"><b>IELTS Speaking Trainer</b><span>2026 Sep–Dec · Part 1</span></div><button class="gear" data-settings>⚙️</button></div></header><main>'+body+'</main>'+nav(active)}
+function voices(){return ('speechSynthesis' in window?speechSynthesis.getVoices():[]).filter(v=>/^en([-_]|$)/i.test(v.lang||''))}
+function matchingVoices(){const wanted=(state.accent||'en-US').toLowerCase();return voices().filter(v=>(v.lang||'').toLowerCase()===wanted)}
+function chosenVoice(){
+ const all=voices();
+ if(state.voiceURI){const exact=all.find(v=>v.voiceURI===state.voiceURI);if(exact)return exact}
+ return matchingVoices()[0]||null
+}
+function speak(s,rate=.92){
+ if(!('speechSynthesis' in window)){toast('이 브라우저는 음성 재생을 지원하지 않아요.');return}
+ speechSynthesis.cancel();
+ const u=new SpeechSynthesisUtterance(s);
+ u.lang=state.accent||'en-US';
+ u.rate=rate;
+ const v=chosenVoice();
+ if(v){u.voice=v;u.lang=v.lang||u.lang}
+ speechSynthesis.speak(u)
+}
+function nav(active){return '<nav class="bottom">'+[['home','🏠','홈'],['topics','📚','토픽'],['review','🔁','복습'],['history','📅','기록'],['settings','⚙️','설정']].map(x=>'<button class="nav '+(active===x[0]?'on':'')+'" data-nav="'+x[0]+'"><strong>'+x[1]+'</strong>'+x[2]+'</button>').join('')+'</nav>'}
+function shell(body,active='home'){app.innerHTML='<header class="top"><div class="topin"><div class="brand"><b>IELTS Speaking Trainer</b><span>2026 Sep–Dec · Part 1</span></div></div></header><main>'+body+'</main>'+nav(active)}
 function home(){
  const today=state.history[day()]||{studied:0,success:0,retry:0};
  shell('<section class="hero"><div class="eyebrow">PART 1 SPEAKING</div><h1>좋은 답변을 반복해서<br>말의 뼈대를 만들어요.</h1><p>질문을 듣고, 나와 가까운 답변 방향을 고른 뒤 읽기·듣기·타이핑으로 익혀보세요.</p><div class="levels">'+levels.map(l=>'<button class="level '+(state.target===l?'on':'')+'" data-target="'+l+'">Target '+l+'</button>').join('')+'</div><div class="stats"><div class="stat"><b>'+today.studied+'</b><span>오늘 학습</span></div><div class="stat"><b>'+today.success+'</b><span>성공</span></div><div class="stat"><b>'+Object.keys(state.review).length+'</b><span>복습 저장</span></div></div></section><div class="grid"><button class="quick" data-today><i>▶️</i><b>오늘 학습</b><span>시즌 문제 중 최대 5문항</span></button><button class="quick" data-nav="topics"><i>📚</i><b>토픽별 학습</b><span>'+DATA.topics.length+'개 토픽 · '+flat.length+'문항</span></button><button class="quick" data-nav="review"><i>🔁</i><b>맞춤 복습</b><span>다시 연습한 답변부터</span></button><button class="quick" data-nav="history"><i>📅</i><b>학습 기록</b><span>최근 학습량 확인</span></button></div>','home')
@@ -32,7 +55,21 @@ function history(){
  shell('<div class="secHead"><h2>학습 기록</h2><span>최근 14일</span></div>'+(days.length?'<div class="list">'+days.map(d=>{const h=state.history[d];return '<div class="row"><span><b>'+d+'</b><small>학습 '+h.studied+' · 성공 '+h.success+' · 다시 '+h.retry+'</small></span></div>'}).join('')+'</div>':'<div class="empty">아직 학습 기록이 없어요.</div>'),'history')
 }
 function settings(){
- shell('<div class="pageTitle"><button class="back" data-nav="home">←</button><div><h1>설정</h1><p>목표 답변 레벨</p></div></div><section class="card" style="padding:18px"><div class="levels">'+levels.map(l=>'<button class="level '+(state.target===l?'on':'')+'" data-target="'+l+'">Target '+l+'</button>').join('')+'</div><p style="color:var(--muted);line-height:1.6;font-size:13px">이 레벨은 학습용 답변 난이도예요. 같은 문장을 말한다고 실제 시험 점수가 보장되는 것은 아니에요.</p></section>','home')
+ const mv=matchingVoices();
+ const voiceOptions='<option value="">자동 선택</option>'+mv.map(v=>'<option value="'+esc(v.voiceURI)+'" '+(state.voiceURI===v.voiceURI?'selected':'')+'>'+esc(v.name)+' ('+esc(v.lang)+')</option>').join('');
+ const voiceStatus=mv.length?mv.length+'개 음성 사용 가능':'이 기기에서 해당 지역 음성을 찾지 못했어요';
+ shell(
+  '<div class="pageTitle"><div><h1>설정</h1><p>학습 레벨과 영어 발음을 설정해요.</p></div></div>'+
+  '<section class="card settingCard"><div class="settingTitle"><b>목표 답변 레벨</b><span>학습할 기본 답변 난이도</span></div><div class="levels">'+levels.map(l=>'<button class="level '+(state.target===l?'on':'')+'" data-target="'+l+'">Target '+l+'</button>').join('')+'</div><p class="settingNote">이 레벨은 학습용 답변 난이도예요. 같은 문장을 말한다고 실제 시험 점수가 보장되는 것은 아니에요.</p></section>'+
+  '<section class="card settingCard"><div class="settingTitle"><b>영어 발음</b><span>질문·답변·문장 학습의 TTS에 적용</span></div>'+
+   '<div class="accentGrid">'+accents.map(a=>'<button class="accent '+(state.accent===a.id?'on':'')+'" data-accent="'+a.id+'"><strong>'+a.flag+'</strong><b>'+a.name+'</b><small>'+a.short+'</small></button>').join('')+'</div>'+
+   '<label class="voiceLabel" for="voiceSelect">기기 음성</label><select class="voiceSelect" id="voiceSelect">'+voiceOptions+'</select>'+
+   '<div class="voiceMeta">'+esc(voiceStatus)+'</div>'+
+   '<button class="big secondary previewVoice" data-preview-voice>🔊 선택한 발음 미리 듣기</button>'+
+   '<p class="settingNote">브라우저와 기기에 설치된 음성에 따라 실제 음색은 달라질 수 있어요. 해당 지역 음성이 없으면 브라우저가 가장 가까운 영어 음성을 사용합니다.</p>'+
+  '</section>',
+  'settings'
+ )
 }
 function start(ids,origin='topics',reviewKey=null){session={ids,index:0,origin,reviewKey};path=null;level=state.target;qko=false;ako=false;trainer=null;view='study';study()}
 function cur(){return qmap.get(session.ids[session.index])}
@@ -55,6 +92,8 @@ document.addEventListener('click',e=>{
  const n=e.target.closest('[data-nav]');if(n){view=n.dataset.nav;session=null;path=null;render();return}
  if(e.target.closest('[data-settings]')){view='settings';settings();return}
  const targ=e.target.closest('[data-target]');if(targ){state.target=targ.dataset.target;level=state.target;save();render();return}
+ const ac=e.target.closest('[data-accent]');if(ac){state.accent=ac.dataset.accent;state.voiceURI='';save();settings();return}
+ if(e.target.closest('[data-preview-voice]')){speak("I usually use English when I study or travel.");return}
  const t=e.target.closest('[data-topic]');if(t){topicId=t.dataset.topic;view='topic';topic();return}
  const q=e.target.closest('[data-q]');if(q){start([q.dataset.q],'topics');return}
  const rv=e.target.closest('[data-review]');if(rv){start([rv.dataset.review.split('::')[0]],'review',rv.dataset.review);return}
@@ -76,4 +115,11 @@ document.addEventListener('click',e=>{
  if(e.target.closest('[data-check]')){const v=document.getElementById('typed')?.value||'';trainer.input=v;const norm=x=>x.toLowerCase().replace(/[’‘]/g,"'").replace(/[^a-z0-9' ]/g,' ').replace(/\s+/g,' ').trim();trainer.feedback=norm(v)===norm(trainer.sentences[trainer.i])?'good':'bad';trainerView();return}
  if(e.target.closest('[data-next-s]')){if(trainer.i+1<trainer.sentences.length){trainer.i++;trainer.phase='learn';trainer.feedback=null;trainer.input='';trainerView()}else{view='study';study()}return}
 });
+document.addEventListener('change',e=>{
+ if(e.target.id==='voiceSelect'){state.voiceURI=e.target.value||'';save();toast(state.voiceURI?'음성을 저장했어요.':'자동 음성 선택으로 바꿨어요.')}
+});
+if('speechSynthesis' in window){
+ const prev=speechSynthesis.onvoiceschanged;
+ speechSynthesis.onvoiceschanged=()=>{if(typeof prev==='function')prev();if(view==='settings')settings()}
+}
 render();
