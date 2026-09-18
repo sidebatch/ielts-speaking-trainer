@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#f6f6f2">
-  <meta name="app-version" content="v0.6.3">
+  <meta name="app-version" content="v0.7.0">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
@@ -22,8 +22,8 @@ main{max-width:720px;margin:auto;padding:18px 14px 30px}.hero,.card{background:v
 .qcard{padding:20px}.chip{display:inline-block;background:var(--green2);color:var(--green);font-size:11px;font-weight:800;border-radius:999px;padding:6px 9px;margin-bottom:10px}.qen{font-size:23px;line-height:1.38;font-weight:800;margin:0}.qko,.ako{margin:13px 0 0;border-top:1px solid var(--line);padding-top:13px;color:var(--muted);line-height:1.6}.tools{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}.tool{border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 11px;font-size:12px;font-weight:850;color:var(--text)}
 .paths{display:grid;gap:8px;margin-top:12px}.path{border:1px solid var(--line);background:#fff;border-radius:15px;padding:13px;text-align:left}.path b{display:block}.path small{color:var(--muted)}.path.on{border-color:var(--green);background:var(--green2)}
 .answer{padding:18px;margin-top:12px}
-.flipWrap{margin-top:12px}.flipCard{perspective:1200px}.flipInner{display:grid;transform-style:preserve-3d;transition:transform .38s cubic-bezier(.2,.75,.25,1)}.flipCard.flipped .flipInner{transform:rotateY(180deg)}.flipFace{grid-area:1/1;background:var(--card);border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow);padding:22px;backface-visibility:hidden;-webkit-backface-visibility:hidden;min-height:430px;display:flex;flex-direction:column}.flipBack{transform:rotateY(180deg)}.flipCard:not(.flipped) .flipBack{pointer-events:none}.flipCard.flipped .flipFront{pointer-events:none}.flipTop{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:18px}.flipKicker{font-size:10px;font-weight:950;letter-spacing:.08em;text-transform:uppercase;color:var(--green)}.flipTip{font-size:11px;color:var(--muted);font-weight:800}.flipCenter{flex:1;display:flex;flex-direction:column;justify-content:center}.flipQuestion{font-size:25px;line-height:1.42;font-weight:900;letter-spacing:-.03em;margin:0}.flipQuestionKo{margin:14px 0 0;color:var(--muted);font-size:14px;line-height:1.6}.flipAnswer{font-size:19px;line-height:1.7;margin:14px 0 0;font-weight:750}.flipAnswerKo{margin:14px 0 0;padding-top:14px;border-top:1px solid var(--line);color:var(--muted);font-size:14px;line-height:1.65}.flipBtn{width:100%;margin-top:18px;border:0;border-radius:14px;padding:14px;font-weight:900;background:var(--green);color:#fff}.flipBtn.secondary{background:var(--green2);color:var(--green);border:1px solid rgba(118,88,238,.16)}.flipHint{text-align:center;color:var(--muted);font-size:11px;line-height:1.5;margin:10px 0 0}.studyActions{margin-top:12px;background:#fff;border:1px solid var(--line);border-radius:20px;padding:14px}.studyActions .actions:first-child{margin-top:0}@media(max-width:480px){.flipFace{min-height:410px;padding:19px}.flipQuestion{font-size:22px}.flipAnswer{font-size:17px}}.answerLabel{font-size:10px;font-weight:950;letter-spacing:.08em;text-transform:uppercase;color:var(--green);margin-bottom:10px}.answerTop{display:flex;justify-content:space-between;gap:10px;align-items:center}.mini{display:flex;gap:5px}.mini button{border:1px solid var(--line);background:#f1f2ee;border-radius:9px;padding:6px 8px;font-size:11px;font-weight:800}.mini button.on{background:var(--green);color:#fff;border-color:var(--green)}.aen{font-size:18px;line-height:1.65;margin:14px 0 0}
-.actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:13px}.big{border:0;border-radius:14px;padding:13px;font-weight:850}.primary{background:var(--green);color:#fff}.secondary{background:#f0f1ed;color:var(--text);border:1px solid var(--line)}.retry{background:var(--warn2);color:var(--warn)}.success{background:var(--green2);color:var(--green)}
+.flipWrap{margin-top:12px}.flipCard{perspective:1200px}.flipInner{display:grid;transform-style:preserve-3d;transition:transform .38s cubic-bezier(.2,.75,.25,1)}.flipCard.flipped .flipInner{transform:rotateY(180deg)}.flipFace{grid-area:1/1;background:var(--card);border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow);padding:22px;backface-visibility:hidden;-webkit-backface-visibility:hidden;min-height:430px;display:flex;flex-direction:column}.flipBack{transform:rotateY(180deg)}.flipCard:not(.flipped) .flipBack{pointer-events:none}.flipCard.flipped .flipFront{pointer-events:none}.flipTop{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:18px}.flipKicker{font-size:10px;font-weight:950;letter-spacing:.08em;text-transform:uppercase;color:var(--green)}.flipTip{font-size:11px;color:var(--muted);font-weight:800}.flipCenter{flex:1;display:flex;flex-direction:column;justify-content:center}.flipQuestion{font-size:25px;line-height:1.42;font-weight:900;letter-spacing:-.03em;margin:0}.flipQuestionKo{margin:14px 0 0;color:var(--muted);font-size:14px;line-height:1.6}.flipAnswer{font-size:19px;line-height:1.7;margin:14px 0 0;font-weight:750}.flipAnswerKo{margin:14px 0 0;padding-top:14px;border-top:1px solid var(--line);color:var(--muted);font-size:14px;line-height:1.65}.flipBtn{width:100%;margin-top:18px;border:0;border-radius:14px;padding:14px;font-weight:900;background:var(--green);color:#fff}.flipBtn.secondary{background:var(--green2);color:var(--green);border:1px solid rgba(118,88,238,.16)}.flipHint{text-align:center;color:var(--muted);font-size:11px;line-height:1.5;margin:10px 0 0}.studyActions{margin-top:12px;background:#fff;border:1px solid var(--line);border-radius:20px;padding:14px}.studyUtilityRow{display:grid;grid-template-columns:1fr 1fr;gap:8px}.studyUtilityBtn{border:1px solid var(--line);background:#fff;color:var(--text);border-radius:13px;padding:11px 10px;font-size:12px;font-weight:850}.studyUtilityBtn small{color:var(--muted);font-weight:750}.studyUtilityBtn.saved{background:var(--green2);border-color:rgba(111,86,232,.22);color:var(--green)}.studyNext{width:100%;margin-top:9px}.answerChange{border:0;background:transparent;color:var(--muted);font-size:11px;font-weight:850;padding:6px 0}.answerChange:active{color:var(--green)}@media(max-width:420px){.studyUtilityRow{grid-template-columns:1fr}}@media(max-width:480px){.flipFace{min-height:410px;padding:19px}.flipQuestion{font-size:22px}.flipAnswer{font-size:17px}}.answerLabel{font-size:10px;font-weight:950;letter-spacing:.08em;text-transform:uppercase;color:var(--green);margin-bottom:10px}.answerTop{display:flex;justify-content:space-between;gap:10px;align-items:center}.mini{display:flex;gap:5px}.mini button{border:1px solid var(--line);background:#f1f2ee;border-radius:9px;padding:6px 8px;font-size:11px;font-weight:800}.mini button.on{background:var(--green);color:#fff;border-color:var(--green)}.aen{font-size:18px;line-height:1.65;margin:14px 0 0}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:13px}.big{border:0;border-radius:14px;padding:13px;font-weight:850}.primary{background:var(--green);color:#fff}.secondary{background:#f0f1ed;color:var(--text);border:1px solid var(--line)}
 .progress{height:7px;background:#e5e7e1;border-radius:999px;overflow:hidden;margin-bottom:16px}.progress div{height:100%;background:var(--green)}
 .empty{border:1px dashed #cdd2cb;border-radius:18px;padding:24px;text-align:center;color:var(--muted)}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}.stat{background:#f0f1ed;border-radius:13px;padding:11px;text-align:center}.stat b{display:block;font-size:18px}.stat span{font-size:11px;color:var(--muted)}
 .typebox{width:100%;min-height:105px;border:2px solid #ddd7ec;border-radius:15px;padding:14px;resize:vertical;outline:none;background:#fff;color:var(--text)}.typebox:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(118,88,238,.08)}.feedback{margin-top:9px;padding:10px 12px;border-radius:12px;font-size:13px}.good{background:var(--green2);color:var(--green)}.bad{background:var(--warn2);color:var(--warn)}
@@ -143,6 +143,17 @@ function load(){
   const s=Object.assign(defaults(),JSON.parse(localStorage.getItem(SKEY)||'{}'));
   if(!['en-US','en-GB'].includes(s.accent))s.accent='en-US';
   delete s.voiceURI;
+  s.review=s.review&&typeof s.review==='object'?s.review:{};
+  for(const [k,v] of Object.entries(s.review)){
+   if(v&&v.status==='success'){delete s.review[k];continue}
+   s.review[k]={saved:true,updated:(v&&v.updated)||''}
+  }
+  s.history=s.history&&typeof s.history==='object'?s.history:{};
+  for(const h of Object.values(s.history)){
+   h.studied=Number(h.studied)||0;
+   h.saved=Number(h.saved)||Number(h.retry)||0;
+   delete h.success;delete h.retry
+  }
   return s
  }catch{return defaults()}
 }
@@ -163,7 +174,7 @@ function speak(s,rate=.92){
  if(v){u.voice=v;u.lang=v.lang||u.lang}
  speechSynthesis.speak(u)
 }
-const APP_VERSION='v0.6.3';
+const APP_VERSION='v0.7.0';
 function navIcon(name){
  const icons={
   home:'<path d="M3.5 10.5 12 3.8l8.5 6.7v9.2a1 1 0 0 1-1 1h-5.2v-6.2H9.7v6.2H4.5a1 1 0 0 1-1-1z"/>',
@@ -177,8 +188,8 @@ function navIcon(name){
 function nav(active){return '<nav class="bottom">'+[['home','홈'],['topics','토픽'],['review','복습'],['history','기록'],['settings','설정']].map(x=>'<button class="nav '+(active===x[0]?'on':'')+'" data-nav="'+x[0]+'">'+navIcon(x[0])+x[1]+'</button>').join('')+'</nav>'}
 function shell(body,active='home'){app.innerHTML='<header class="top"><div class="topin"><div class="brand"><b>IELTS Speaking Trainer</b><span>2026 Sep–Dec · Part 1</span></div><span class="versionBadge">'+APP_VERSION+'</span></div></header><main>'+body+'</main>'+nav(active)}
 function home(){
- const today=state.history[day()]||{studied:0,success:0,retry:0};
- shell('<section class="hero"><div class="eyebrow">PART 1 SPEAKING</div><h1>좋은 답변을 반복해서<br>말의 뼈대를 만들어요.</h1><p>질문을 듣고, 나와 가까운 답변 방향을 고른 뒤 읽기·듣기·타이핑으로 익혀보세요.</p><div class="levels">'+levels.map(l=>'<button class="level '+(state.target===l?'on':'')+'" data-target="'+l+'">Target '+l+'</button>').join('')+'</div><div class="stats"><div class="stat"><b>'+today.studied+'</b><span>오늘 학습</span></div><div class="stat"><b>'+today.success+'</b><span>성공</span></div><div class="stat"><b>'+Object.keys(state.review).length+'</b><span>복습 저장</span></div></div></section><div class="homeMenu"><button class="homeMenuItem primaryMenu" data-today><span class="homeMenuText"><b>오늘 학습</b><span>시즌 문제 중 최대 5문항</span></span><span class="homeMenuArrow">›</span></button><button class="homeMenuItem" data-nav="topics"><span class="homeMenuText"><b>토픽별 학습</b><span>'+DATA.topics.length+'개 토픽 · '+flat.length+'문항</span></span><span class="homeMenuArrow">›</span></button><button class="homeMenuItem" data-nav="review"><span class="homeMenuText"><b>맞춤 복습</b><span>다시 연습한 답변부터</span></span><span class="homeMenuArrow">›</span></button><button class="homeMenuItem" data-nav="history"><span class="homeMenuText"><b>학습 기록</b><span>최근 학습량 확인</span></span><span class="homeMenuArrow">›</span></button></div>','home')
+ const today=state.history[day()]||{studied:0,saved:0};
+ shell('<section class="hero"><div class="eyebrow">PART 1 SPEAKING</div><h1>좋은 답변을 반복해서<br>말의 뼈대를 만들어요.</h1><p>질문을 듣고, 나와 가까운 답변 방향을 고른 뒤 읽기·듣기·타이핑으로 익혀보세요.</p><div class="levels">'+levels.map(l=>'<button class="level '+(state.target===l?'on':'')+'" data-target="'+l+'">Target '+l+'</button>').join('')+'</div><div class="stats"><div class="stat"><b>'+today.studied+'</b><span>오늘 학습</span></div><div class="stat"><b>'+(today.saved||0)+'</b><span>오늘 저장</span></div><div class="stat"><b>'+Object.keys(state.review).length+'</b><span>복습 저장</span></div></div></section><div class="homeMenu"><button class="homeMenuItem primaryMenu" data-today><span class="homeMenuText"><b>오늘 학습</b><span>시즌 문제 중 최대 5문항</span></span><span class="homeMenuArrow">›</span></button><button class="homeMenuItem" data-nav="topics"><span class="homeMenuText"><b>토픽별 학습</b><span>'+DATA.topics.length+'개 토픽 · '+flat.length+'문항</span></span><span class="homeMenuArrow">›</span></button><button class="homeMenuItem" data-nav="review"><span class="homeMenuText"><b>맞춤 복습</b><span>저장한 답변 다시 보기</span></span><span class="homeMenuArrow">›</span></button><button class="homeMenuItem" data-nav="history"><span class="homeMenuText"><b>학습 기록</b><span>최근 학습량 확인</span></span><span class="homeMenuArrow">›</span></button></div>','home')
 }
 function topics(){
  shell('<div class="secHead"><h2>토픽</h2><span>'+DATA.topics.length+' topics</span></div><div class="list">'+DATA.topics.map(t=>'<button class="row" data-topic="'+t.id+'"><span><b>'+esc(t.topic.en)+'</b><small>'+esc(t.topic.ko)+'</small></span><small>'+t.questions.length+' questions ›</small></button>').join('')+'</div>','topics')
@@ -189,11 +200,11 @@ function topic(){
 }
 function review(){
  const arr=Object.entries(state.review);
- shell('<div class="secHead"><h2>맞춤 복습</h2><span>'+arr.length+' saved</span></div>'+(arr.length?'<div class="list">'+arr.map(([k,v])=>{const [qid,pid]=k.split('::'),q=qmap.get(qid),p=q?.paths.find(x=>x.id===pid);return q&&p?'<div class="reviewItem"><button class="row" data-review="'+k+'"><span><b>'+esc(q.question.en)+'</b><small>'+esc(p.label.ko)+' · '+(v.status==='retry'?'다시 연습':'성공')+'</small></span><span>›</span></button><button class="reviewRemove" data-remove-review="'+k+'" aria-label="복습에서 제거">제거</button></div>':''}).join('')+'</div>':'<div class="empty">아직 복습할 답변이 없어요.<br>학습 후 <b>다시 연습</b>을 눌러보세요.</div>'),'review')
+ shell('<div class="secHead"><h2>맞춤 복습</h2><span>'+arr.length+' saved</span></div>'+(arr.length?'<div class="list">'+arr.map(([k,v])=>{const [qid,pid]=k.split('::'),q=qmap.get(qid),p=q?.paths.find(x=>x.id===pid);return q&&p?'<div class="reviewItem"><button class="row" data-review="'+k+'"><span><b>'+esc(q.question.en)+'</b><small>'+esc(p.label.ko)+' · 복습 저장</small></span><span>›</span></button><button class="reviewRemove" data-remove-review="'+k+'" aria-label="복습에서 제거">제거</button></div>':''}).join('')+'</div>':'<div class="empty">아직 저장한 답변이 없어요.<br>모범답안에서 <b>복습에 저장</b>을 눌러보세요.</div>'),'review')
 }
 function historyView(){
  const days=Object.keys(state.history).sort().reverse().slice(0,14);
- shell('<div class="secHead"><h2>학습 기록</h2><span>최근 14일</span></div>'+(days.length?'<div class="list">'+days.map(d=>{const h=state.history[d];return '<div class="row"><span><b>'+d+'</b><small>학습 '+h.studied+' · 성공 '+h.success+' · 다시 '+h.retry+'</small></span></div>'}).join('')+'</div>':'<div class="empty">아직 학습 기록이 없어요.</div>'),'history')
+ shell('<div class="secHead"><h2>학습 기록</h2><span>최근 14일</span></div>'+(days.length?'<div class="list">'+days.map(d=>{const h=state.history[d];return '<div class="row"><span><b>'+d+'</b><small>학습 '+(h.studied||0)+' · 복습 저장 '+(h.saved||0)+'</small></span></div>'}).join('')+'</div>':'<div class="empty">아직 학습 기록이 없어요.</div>'),'history')
 }
 function settings(){
  shell(
@@ -217,12 +228,12 @@ function study(){
  if(!path){
   content='<section class="card qcard"><span class="chip">'+esc(q.topic.topic.en)+' · '+esc(q.topic.topic.ko)+'</span><p class="qen">'+esc(q.question.en)+'</p>'+(qko?'<p class="qko">'+esc(q.question.ko)+'</p>':'')+'<div class="tools"><button class="tool" data-speak-q>🔊 질문 듣기</button><button class="tool" data-qko>'+(qko?'뜻 숨기기':'뜻 보기')+'</button></div></section><section class="section"><div class="secHead"><h2>답변 방향</h2><span>나와 가까운 것을 선택</span></div><div class="paths">'+q.paths.map(p=>'<button class="path" data-path="'+p.id+'"><b>'+esc(p.label.en)+'</b><small>'+esc(p.label.ko)+'</small></button>').join('')+'</div></section>';
  }else{
-  const a=path.answers[level];
+  const a=path.answers[level],reviewKey=q.id+'::'+path.id,isSaved=!!state.review[reviewKey];
   content='<div class="flipWrap"><div class="flipCard '+(flipSide==='back'?'flipped':'')+'"><div class="flipInner">'+
    '<section class="flipFace flipFront"><div class="flipTop"><span class="flipKicker">QUESTION</span><span class="flipTip">먼저 직접 말해보기</span></div><div class="flipCenter"><span class="chip">'+esc(q.topic.topic.en)+' · '+esc(q.topic.topic.ko)+'</span><p class="flipQuestion">'+esc(q.question.en)+'</p><p class="flipQuestionKo">'+esc(q.question.ko)+'</p><div class="tools"><button class="tool" data-speak-q>🔊 질문 듣기</button></div></div><button class="flipBtn" data-flip>모범답안 보기 →</button><p class="flipHint">막히면 바로 뒤집어도 괜찮아요. 몇 번이든 자유롭게 확인하세요.</p></section>'+
-   '<section class="flipFace flipBack"><div class="flipTop"><span class="flipKicker">MODEL ANSWER</span><span class="flipTip">보고 · 듣고 · 따라 말하기</span></div><div class="answerTop"><div class="mini">'+levels.map(l=>'<button class="'+(l===level?'on':'')+'" data-level="'+l+'">'+l+'</button>').join('')+'</div><small style="color:var(--green);font-weight:800">'+(level===state.target?'내 목표':'')+'</small></div><div class="flipCenter"><p class="flipAnswer">'+esc(a.en)+'</p><p class="flipAnswerKo">'+esc(a.ko)+'</p><div class="tools"><button class="tool" data-speak-a>🔊 듣기</button><button class="tool" data-slow-a>0.8× 천천히</button></div></div><button class="flipBtn secondary" data-flip>← 질문으로 돌아가기</button><p class="flipHint">답을 본 뒤 다시 앞면으로 돌아가, 가능한 만큼 소리 내서 말해보세요.</p></section>'+
+   '<section class="flipFace flipBack"><div class="flipTop"><span class="flipKicker">MODEL ANSWER</span><span class="flipTip">보고 · 듣고 · 따라 말하기</span></div><div class="answerTop"><div class="mini">'+levels.map(l=>'<button class="'+(l===level?'on':'')+'" data-level="'+l+'">'+l+'</button>').join('')+'</div><button class="answerChange" data-change>다른 답변 보기</button></div><div class="flipCenter"><p class="flipAnswer">'+esc(a.en)+'</p><p class="flipAnswerKo">'+esc(a.ko)+'</p><div class="tools"><button class="tool" data-speak-a>🔊 듣기</button><button class="tool" data-slow-a>0.8× 천천히</button></div></div><button class="flipBtn secondary" data-flip>← 질문으로 돌아가기</button><p class="flipHint">답을 본 뒤 다시 앞면으로 돌아가, 가능한 만큼 소리 내서 말해보세요.</p></section>'+
   '</div></div></div>'+
-  '<section class="studyActions"><div class="actions"><button class="big primary" data-trainer>⌨️ 타이핑 학습 <small style="opacity:.82">(선택)</small></button><button class="big secondary" data-change>답변 방향 변경</button></div><div class="actions"><button class="big retry" data-rate="retry">다시 연습</button><button class="big success" data-rate="success">성공</button></div></section>';
+  '<section class="studyActions"><div class="studyUtilityRow"><button class="studyUtilityBtn" data-trainer>타이핑 학습 <small>· 선택</small></button><button class="studyUtilityBtn '+(isSaved?'saved':'')+'" data-save-review>'+(isSaved?'✓ 복습 저장됨':'☆ 복습에 저장')+'</button></div><button class="big primary studyNext" data-complete>다음 질문 →</button></section>';
  }
  shell('<div class="progress"><div style="width:'+pct+'%"></div></div>'+content,session.origin==='review'?'review':'topics')
 }
@@ -241,7 +252,14 @@ function trainerView(){
  }
  shell('<div class="pageTitle"><button class="back" data-close-trainer>←</button><div><h1>타이핑 학습</h1><p>선택 학습 · '+(trainer.i+1)+' / '+trainer.sentences.length+'</p></div></div><section class="card trainerCard"><div class="trainerTop"><span class="trainerStep">Sentence '+(trainer.i+1)+'</span><span class="trainerStage">전체 문장 타이핑</span></div><div class="trainerPrompt"><p class="trainerSentence" style="font-size:18px;color:var(--muted)">모범답안을 본 뒤, 기억나는 문장을 직접 입력해 보세요.</p><div class="typingMeaning"><b>한국어 뜻</b><p>'+esc(meaning)+'</p></div><div class="tools"><button class="tool" data-speak-s>🔊 듣기</button><button class="tool" data-slow-s>0.8× 천천히</button></div><textarea class="typebox" id="typedPractice" autocomplete="off" autocapitalize="sentences" spellcheck="false" placeholder="영어 문장을 입력하세요.">'+esc(trainer.input||'')+'</textarea><p class="trainerHint">타이핑은 선택 학습이에요. 모범답안만 보고 넘어가도 됩니다.</p></div><button class="big primary trainerMain" data-check-type>정답 확인</button>'+feedback+'</section>',session.origin==='review'?'review':'topics')
 }
-function mark(kind){const q=cur(),k=q.id+'::'+path.id;state.review[k]={status:kind,updated:day()};const d=day();state.history[d]??={studied:0,success:0,retry:0};state.history[d].studied++;state.history[d][kind]++;save();toast(kind==='success'?'성공으로 저장했어요.':'다시 연습에 넣었어요.');setTimeout(nextQ,250)}
+function ensureTodayHistory(){const d=day();state.history[d]??={studied:0,saved:0};state.history[d].studied=Number(state.history[d].studied)||0;state.history[d].saved=Number(state.history[d].saved)||0;return state.history[d]}
+function toggleReviewSave(){
+ const q=cur(),k=q.id+'::'+path.id,h=ensureTodayHistory();
+ if(state.review[k]){delete state.review[k];toast('복습 저장을 해제했어요.')}
+ else{state.review[k]={saved:true,updated:day()};h.saved++;toast('복습에 저장했어요.')}
+ save();study()
+}
+function completeQuestion(){const h=ensureTodayHistory();h.studied++;save();nextQ()}
 function nextQ(){if(session.index<session.ids.length-1){session.index++;session.reviewKey=null;path=null;level=state.target;qko=false;ako=false;flipSide='front';study()}else{const o=session.origin;session=null;flipSide='front';view=o==='review'?'review':'home';o==='review'?review():home()}}
 function render(){if(view==='home')home();else if(view==='topics')topics();else if(view==='topic')topic();else if(view==='review')review();else if(view==='history')historyView();else if(view==='settings')settings();else if(view==='study')study();else if(view==='trainer')trainerView()}
 document.addEventListener('click',e=>{
@@ -263,8 +281,9 @@ document.addEventListener('click',e=>{
  if(e.target.closest('[data-speak-q]')){speak(cur().question.en);return}
  if(e.target.closest('[data-speak-a]')){speak(path.answers[level].en);return}
  if(e.target.closest('[data-slow-a]')){speak(path.answers[level].en,.72);return}
- if(e.target.closest('[data-change]')){path=null;ako=false;flipSide='front';study();return}
- const r=e.target.closest('[data-rate]');if(r){mark(r.dataset.rate);return}
+ if(e.target.closest('[data-change]')){path=null;session.reviewKey=null;ako=false;flipSide='front';study();return}
+ if(e.target.closest('[data-save-review]')){toggleReviewSave();return}
+ if(e.target.closest('[data-complete]')){completeQuestion();return}
  if(e.target.closest('[data-trainer]')){const a=path.answers[level];const ens=(a.en.match(/[^.!?]+[.!?]+|[^.!?]+$/g)||[a.en]).map(x=>x.trim()).filter(Boolean);const kos=(a.ko.match(/[^.!?]+[.!?]+|[^.!?]+$/g)||[a.ko]).map(x=>x.trim()).filter(Boolean);trainer={sentences:ens,koSentences:kos,koFull:a.ko,koAligned:ens.length===kos.length,i:0,input:'',feedback:null};view='trainer';trainerView();return}
  if(e.target.closest('[data-close-trainer]')){view='study';trainer=null;study();return}
  if(e.target.closest('[data-speak-s]')){speak(trainer.sentences[trainer.i]);return}
