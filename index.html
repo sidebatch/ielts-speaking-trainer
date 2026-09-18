@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#f6f6f2">
-  <meta name="app-version" content="v0.5.0">
+  <meta name="app-version" content="v0.5.1">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
@@ -16,7 +16,7 @@ main{max-width:720px;margin:auto;padding:18px 14px 30px}.hero,.card{background:v
 .levels{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:16px}.level{border:1px solid var(--line);background:#f0f1ed;border-radius:13px;padding:11px;font-weight:800}.level.on{background:var(--green);color:#fff;border-color:var(--green)}
 .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:14px}.quick{background:#fff;border:1px solid var(--line);border-radius:20px;padding:16px;text-align:left;min-height:120px}.quick i{font-style:normal;font-size:22px}.quick b{display:block;margin:14px 0 4px}.quick span{font-size:12px;color:var(--muted);line-height:1.45}
 .section{margin-top:20px}.secHead{display:flex;justify-content:space-between;align-items:end;margin:0 2px 9px}.secHead h2{font-size:18px;margin:0}.secHead span{font-size:12px;color:var(--muted)}
-.list{display:grid;gap:8px}.row{width:100%;border:1px solid var(--line);background:#fff;border-radius:16px;padding:14px;text-align:left;display:flex;justify-content:space-between;gap:12px;align-items:center}.row b{display:block;font-size:14px}.row small{color:var(--muted)}
+.list{display:grid;gap:8px}.row{width:100%;border:1px solid var(--line);background:#fff;border-radius:16px;padding:14px;text-align:left;display:flex;justify-content:space-between;gap:12px;align-items:center}.row b{display:block;font-size:14px}.row small{color:var(--muted)}.reviewItem{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:stretch}.reviewItem .row{min-width:0}.reviewRemove{border:1px solid #f0d7db;background:#fff5f6;color:#b94b58;border-radius:16px;padding:0 13px;font-size:12px;font-weight:900}.reviewRemove:active{transform:scale(.98)}
 .bottom{position:fixed;left:0;right:0;bottom:0;z-index:40;background:rgba(255,255,255,.96);backdrop-filter:blur(13px);border-top:1px solid var(--line);padding:6px 6px calc(7px + env(safe-area-inset-bottom));display:grid;grid-template-columns:repeat(5,1fr)}.nav{border:0;background:transparent;color:#8a8491;padding:7px 3px;font-size:10px;font-weight:850;border-radius:0}.nav strong{font-size:20px;display:block;line-height:1.15}.nav.on{background:transparent;color:var(--green)}@media(min-width:760px){.bottom{max-width:720px;left:50%;right:auto;width:720px;transform:translateX(-50%);border:1px solid var(--line);border-bottom:0;border-radius:18px 18px 0 0}}
 .back{width:42px;height:42px;border:1px solid var(--line);background:#fff;border-radius:50%;padding:0;font-size:20px;display:grid;place-items:center}.pageTitle{display:flex;gap:11px;align-items:center;margin:2px 0 14px}.pageTitle h1{font-size:20px;letter-spacing:-.035em;margin:0}.pageTitle p{margin:3px 0 0;color:var(--muted);font-size:12px}
 .qcard{padding:20px}.chip{display:inline-block;background:var(--green2);color:var(--green);font-size:11px;font-weight:800;border-radius:999px;padding:6px 9px;margin-bottom:10px}.qen{font-size:23px;line-height:1.38;font-weight:800;margin:0}.qko,.ako{margin:13px 0 0;border-top:1px solid var(--line);padding-top:13px;color:var(--muted);line-height:1.6}.tools{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}.tool{border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 11px;font-size:12px;font-weight:850;color:var(--text)}
@@ -99,7 +99,7 @@ function speak(s,rate=.92){
  if(v){u.voice=v;u.lang=v.lang||u.lang}
  speechSynthesis.speak(u)
 }
-const APP_VERSION='v0.5.0';
+const APP_VERSION='v0.5.1';
 function nav(active){return '<nav class="bottom">'+[['home','🏠','홈'],['topics','📚','토픽'],['review','🔁','복습'],['history','📅','기록'],['settings','⚙️','설정']].map(x=>'<button class="nav '+(active===x[0]?'on':'')+'" data-nav="'+x[0]+'"><strong>'+x[1]+'</strong>'+x[2]+'</button>').join('')+'</nav>'}
 function shell(body,active='home'){app.innerHTML='<header class="top"><div class="topin"><div class="brand"><b>IELTS Speaking Trainer</b><span>2026 Sep–Dec · Part 1</span></div><span class="versionBadge">'+APP_VERSION+'</span></div></header><main>'+body+'</main>'+nav(active)}
 function home(){
@@ -115,7 +115,7 @@ function topic(){
 }
 function review(){
  const arr=Object.entries(state.review);
- shell('<div class="secHead"><h2>맞춤 복습</h2><span>'+arr.length+' saved</span></div>'+(arr.length?'<div class="list">'+arr.map(([k,v])=>{const [qid,pid]=k.split('::'),q=qmap.get(qid),p=q?.paths.find(x=>x.id===pid);return q&&p?'<button class="row" data-review="'+k+'"><span><b>'+esc(q.question.en)+'</b><small>'+esc(p.label.ko)+' · '+(v.status==='retry'?'다시 연습':'성공')+'</small></span><span>›</span></button>':''}).join('')+'</div>':'<div class="empty">아직 복습할 답변이 없어요.<br>학습 후 <b>다시 연습</b>을 눌러보세요.</div>'),'review')
+ shell('<div class="secHead"><h2>맞춤 복습</h2><span>'+arr.length+' saved</span></div>'+(arr.length?'<div class="list">'+arr.map(([k,v])=>{const [qid,pid]=k.split('::'),q=qmap.get(qid),p=q?.paths.find(x=>x.id===pid);return q&&p?'<div class="reviewItem"><button class="row" data-review="'+k+'"><span><b>'+esc(q.question.en)+'</b><small>'+esc(p.label.ko)+' · '+(v.status==='retry'?'다시 연습':'성공')+'</small></span><span>›</span></button><button class="reviewRemove" data-remove-review="'+k+'" aria-label="복습에서 제거">제거</button></div>':''}).join('')+'</div>':'<div class="empty">아직 복습할 답변이 없어요.<br>학습 후 <b>다시 연습</b>을 눌러보세요.</div>'),'review')
 }
 function historyView(){
  const days=Object.keys(state.history).sort().reverse().slice(0,14);
@@ -183,6 +183,7 @@ document.addEventListener('click',e=>{
  if(e.target.closest('[data-preview-voice]')){speak("I usually use English when I study or travel.");return}
  const t=e.target.closest('[data-topic]');if(t){topicId=t.dataset.topic;view='topic';topic();return}
  const q=e.target.closest('[data-q]');if(q){start([q.dataset.q],'topics');return}
+ const removeReview=e.target.closest('[data-remove-review]');if(removeReview){const k=removeReview.dataset.removeReview;if(state.review[k]){delete state.review[k];save();review();toast('복습 목록에서 제거했어요.')}return}
  const rv=e.target.closest('[data-review]');if(rv){start([rv.dataset.review.split('::')[0]],'review',rv.dataset.review);return}
  if(e.target.closest('[data-today]')){const ids=[...flat].sort(()=>Math.random()-.5).slice(0,5).map(q=>q.id);start(ids,'today');return}
  const p=e.target.closest('[data-path]');if(p){path=cur().paths.find(x=>x.id===p.dataset.path);level=state.target;flipSide='front';study();return}
