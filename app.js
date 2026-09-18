@@ -94,37 +94,27 @@ function pushAppHistory(){
  history.pushState({ieltsApp:true,view},'',location.href)
 }
 function goHomeFromBack(){
- speechSynthesis?.cancel?.();
+ if('speechSynthesis' in window)speechSynthesis.cancel();
  session=null;path=null;trainer=null;topicId=null;qko=false;ako=false;view='home';home()
 }
 function handleBrowserBack(){
- if(view==='trainer'){view='study';trainer=null;study();return}
- if(view==='study'){
+ if(view==='trainer'){view='study';trainer=null;study()}
+ else if(view==='study'){
    const origin=session?.origin;
    session=null;path=null;trainer=null;qko=false;ako=false;
    if(origin==='review'){view='review';review()}
    else if(topicId){view='topic';topic()}
    else{view='home';home()}
-   return
+ }else if(view==='topic'){view='topics';topicId=null;topics()}
+ else if(view!=='home'){goHomeFromBack()}
+ else{
+   toast('뒤로가기를 한 번 더 누르면 종료합니다.');
  }
- if(view==='topic'){view='topics';topicId=null;topics();return}
- if(view!=='home'){goHomeFromBack();return}
- const leave=window.confirm('IELTS Speaking Trainer를 종료할까요?');
- if(leave){
-   history.back();
- }else{
-   history.pushState({ieltsApp:true,view:'home'},'',location.href);
- }
+ // Always restore a guard entry so one Android Back press never leaves the app.
+ history.pushState({ieltsApp:true,view},'',location.href);
 }
 document.addEventListener('click',e=>{
- const n=e.target.closest('[data-nav]');if(n){view=n.dataset.nav;session=null;path=null;history.replaceState({ieltsApp:true,view:'home'},'',location.href);
-history.pushState({ieltsApp:true,view:'home'},'',location.href);
-window.addEventListener('popstate',()=>{
- handlingPop=true;
- handleBrowserBack();
- handlingPop=false;
-});
-render();pushAppHistory();return}
+ const n=e.target.closest('[data-nav]');if(n){view=n.dataset.nav;session=null;path=null;render();pushAppHistory();return}
  if(e.target.closest('[data-settings]')){view='settings';settings();pushAppHistory();return}
  const targ=e.target.closest('[data-target]');if(targ){state.target=targ.dataset.target;level=state.target;save();render();return}
  const ac=e.target.closest('[data-accent]');if(ac){state.accent=ac.dataset.accent;state.voiceURI='';save();settings();return}
@@ -157,4 +147,12 @@ if('speechSynthesis' in window){
  const prev=speechSynthesis.onvoiceschanged;
  speechSynthesis.onvoiceschanged=()=>{if(typeof prev==='function')prev();if(view==='settings')settings()}
 }
+// Android/browser Back guard. One same-page history entry is kept in front.
+history.replaceState({ieltsApp:true,view:'home'},'',location.href);
+history.pushState({ieltsApp:true,view:'home'},'',location.href);
+window.addEventListener('popstate',()=>{
+ handlingPop=true;
+ handleBrowserBack();
+ handlingPop=false;
+});
 render();
